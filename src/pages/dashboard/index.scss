@@ -1,0 +1,116 @@
+.dashboard {
+  &-container {
+    max-width: 1230px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+  .sidebar {
+    border-radius: 8px;
+    margin-bottom: 40px;
+    li {
+      margin-bottom: 10px;
+    }
+    svg {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      path {
+        fill: #2bb24a;
+        stroke: #2bb24a;
+      }
+    }
+    li a {
+      display: block;
+      padding: 10px 15px;
+      border: 1px solid #2bb24a;
+      color: #2bb24a;
+      border-radius: 8px;
+      &.active {
+        color: #fff;
+        background-color: #2bb24a;
+        svg path {
+          fill: #fff;
+          stroke: #fff;
+        }
+      }
+      :hover {
+        color: #000;
+      }
+    }
+    @media (max-width: 1200px) {
+      li a {
+        white-space: nowrap;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .title {
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
+    padding: 10px 30px;
+    border-radius: 6px;
+    background-color: #2bb24a;
+    color: #fff;
+  }
+
+  .button {
+    outline: 0;
+    border: 0;
+    width: 100px;
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    background-color: #2bb24a;
+    color: #fff;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .go-back {
+    padding-left: 16px;
+    background: url("../../assets/back.svg") center left no-repeat;
+    background-size: 12px;
+    display: inline-block;
+    margin-right: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 12px;
+  }
+  table {
+    th {
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    tr td {
+      font-size: 13px;
+    }
+    tr td:not(:nth-child(2)) {
+      white-space: nowrap;
+    }
+    @media (max-width: 767px) {
+      display: block;
+      max-width: 700px;
+      overflow-x: auto;
+    }
+  }
+  @media (max-width: 991px) {
+    .title {
+      font-size: 28px;
+    }
+  }
+  @media (max-width: 575px) {
+    .title {
+      font-size: 22px;
+    }
+  }
+}

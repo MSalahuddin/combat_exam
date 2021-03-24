@@ -1,0 +1,39 @@
+.meter {
+  &-progress {
+    height: 110px;
+    width: 185px;
+    background: url("../../assets/meter.png") center no-repeat;
+    background-size: contain;
+    margin: 10px auto;
+    position: relative;
+    .needle {
+      height: 60px;
+      width: 19px;
+      background: url("../../assets/needle.png") center no-repeat;
+      background-size: contain;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-90deg);
+      transform-origin: 55% 85%;
+      transition: 0.4s;
+    }
+  }
+
+  &-card {
+    min-height: 100px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    &-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #666;
+    }
+    &-subtitle {
+      font-size: 2rem;
+      color: #000;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+  }
+}

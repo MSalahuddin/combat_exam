@@ -1,0 +1,180 @@
+.payment {
+  &-content {
+    margin: 8rem auto 1.5rem;
+    width: calc(100% - 30px);
+    max-width: 500px;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 #ccc;
+    padding-bottom: 20px;
+  }
+  &-body {
+    padding: 15px 15px 0;
+  }
+  &-agree {
+    font-size: 12px;
+    color: #93a0af;
+    text-align: center;
+  }
+  &-top {
+    padding: 15px 25px 15px 80px;
+    background: #2bb24a url("../../assets/cap.svg") left 15px center no-repeat;
+    background-size: 42px;
+    color: #fff;
+    p {
+      font-size: 17px;
+      margin-bottom: 0;
+    }
+  }
+  &-header {
+    padding: 0 15px;
+    margin-top: 15px;
+    color: #2c3339;
+    p {
+      color: #9a9da2;
+      margin-bottom: 0;
+    }
+  }
+  .title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    p {
+      color: #666;
+      margin-bottom: 0;
+    }
+    span {
+      color: #2bb24a;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+  .tid-form {
+    padding-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    p {
+      font-weight: 700;
+    }
+  }
+  .button {
+    border: 0;
+    color: #fff;
+    background-color: #2bb24a;
+    outline: none;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    display: block;
+    width: 100%;
+    font-weight: 600;
+    &:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    &:hover {
+      background-color: #1b9b39;
+    }
+  }
+
+  .item {
+    border: 1px solid #d6d7db;
+    background-color: #f0fafb;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #2bb24a;
+    padding-left: 50px;
+    padding: 10px 12px 10px 45px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .row {
+    .item {
+      background-size: 80px;
+      height: 100px;
+      margin-bottom: 15px;
+    }
+  }
+  .list {
+    .item {
+      background-color: transparent;
+      background-position: left 12px center;
+      background-size: 24px;
+    }
+  }
+  &-trust {
+    height: 24px;
+    background: url("../../assets/trust-icons.png") center no-repeat;
+    background-size: contain;
+    margin-top: 30px;
+  }
+  &-powered {
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+    margin-bottom: 5rem;
+    strong {
+      font-size: 16px;
+      font-weight: 900;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    &-content {
+      margin: 3rem auto;
+    }
+  }
+}
+.job-details .modal-title {
+  font-size: 18px;
+}
+.job-bank {
+  .modal-body {
+    padding: 15px 15px 30px;
+    p {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+  }
+  table {
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 10px 15px;
+    border: 1px solid #eee;
+  }
+  .tid-form {
+    padding-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    p {
+      font-weight: 700;
+    }
+  }
+  .button {
+    border: 1px solid #2bb24a;
+    color: #2bb24a;
+    background-color: transparent;
+    outline: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    display: block;
+    width: 100%;
+    &:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    &:hover {
+      background-color: #2bb24a;
+      color: #fff;
+    }
+  }
+}

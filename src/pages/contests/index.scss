@@ -1,0 +1,122 @@
+.contests {
+  .hero {
+    padding: 5% 0;
+    background-color: #abcf3b;
+    h2 {
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #fff;
+      margin: 0 auto;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .contestImg{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .button {
+    border: 1px solid #2bb24a;
+    color: #2bb24a;
+    background-color: transparent;
+    outline: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    display: block;
+    width: 100%;
+    &:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    &:hover {
+      background-color: #2bb24a;
+      color: #fff;
+    }
+  }
+
+  .sub-hero {
+    background-color: #2bb24a;
+    padding: 20px;
+    p {
+      color: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 600;
+      font-size: 18px;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .tab {
+    text-align: center;
+    padding: 15px;
+    flex: 1;
+    color: #333;
+    cursor: pointer;
+    // border-bottom: ${({ active }) => (active ? "3px solid green" : "3px solid transparent")};
+  }
+  .tab-section {
+    padding: 40px 20px;
+  }
+}
+
+.job-bank {
+  .modal-body {
+    padding: 15px 15px 30px;
+    p {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+  }
+  table {
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 10px 15px;
+    border: 1px solid #eee;
+  }
+  .tid-form {
+    padding-top: 20px;
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    p {
+      font-weight: 700;
+    }
+  }
+  .button {
+    border: 1px solid #2bb24a;
+    color: #2bb24a;
+    background-color: transparent;
+    outline: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    display: block;
+    width: 100%;
+    &:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+    &:hover {
+      background-color: #2bb24a;
+      color: #fff;
+    }
+  }
+}

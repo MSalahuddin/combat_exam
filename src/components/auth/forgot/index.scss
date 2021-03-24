@@ -1,0 +1,48 @@
+.forgot {
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 40px 30px;
+  position: relative;
+  .close-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    height: 16px;
+    width: 16px;
+    background: url("../../../assets/close.svg") center no-repeat;
+    background-size: contain;
+    cursor: pointer;
+  }
+  .button {
+    outline: 0;
+    border: 0;
+    display: block;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 20px;
+    background-color: #4eb51a;
+    color: #fff;
+    width: 100%;
+  }
+  .title {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 0;
+  }
+  .action-line {
+    text-align: center;
+    font-size: 14px;
+    span {
+      color: #4eb51a;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}

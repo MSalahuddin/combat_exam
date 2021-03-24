@@ -1,0 +1,214 @@
+.home-user {
+  .hero {
+    padding: 8% 0;
+    text-align: center;
+    background-color: #6610f2;
+    h2 {
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #fff;
+      max-width: 450px;
+      margin: 0 auto;
+      font-size: 18px;
+    }
+  }
+
+  .sub-hero {
+    background-color: #462d9b;
+    padding: 20px;
+    p {
+      color: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 600;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .card-wrapper {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 15px 10px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    h4 {
+      font-weight: 500;
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    p {
+      color: #444;
+      background-size: 22px;
+      background-position: left center;
+      background-repeat: no-repeat;
+      font-size: 13px;
+      padding-left: 30px;
+      font-weight: 500;
+      span {
+        display: block;
+        font-size: 14px;
+      }
+      &.time {
+        background-image: url("../../../assets/clock.svg");
+      }
+      &.available {
+        background-image: url("../../../assets/comment.svg");
+      }
+      &.total {
+        background-image: url("../../../assets/test.svg");
+      }
+    }
+    .buttons {
+      width: 100%;
+      padding: 10px 0 0;
+      margin-top: auto;
+    }
+    button {
+      border: 1px solid #abcf3b;
+      color: #abcf3b;
+      background-color: transparent;
+      outline: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 15px;
+      display: block;
+      width: 100%;
+      &:disabled {
+        opacity: 0.8;
+        cursor: not-allowed;
+      }
+      &:hover {
+        background-color: #abcf3b;
+        color: #fff;
+      }
+    }
+  }
+
+  .tabs {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto 60px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .tab {
+    text-align: center;
+    padding: 15px;
+    flex: 1;
+    color: #333;
+    cursor: pointer;
+    // border-bottom: ${({ active }) => (active ? "3px solid green" : "3px solid transparent")};
+  }
+
+  .tags {
+    text-align: center;
+    span {
+      cursor: pointer;
+      display: inline-block;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      margin: 5px;
+      font-size: 14px;
+      border-radius: 6px;
+      &.active,
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+
+  .tab-section {
+    padding: 40px 20px;
+  }
+
+  .details {
+    padding: 20px;
+    text-align: center;
+    h2 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #555;
+      font-size: 16px;
+    }
+  }
+
+  .mock-title {
+    position: relative;
+    text-align: center;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 1px solid #eee;
+    }
+    span {
+      display: inline-block;
+      color: #5f6d81;
+      background-color: #fff;
+      padding: 15px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .left-section {
+    text-align: right;
+    color: #00b1e4;
+    border-right: 2px dashed #eee;
+    padding-right: 30px;
+    .badge {
+      color: #666;
+      font-weight: 400;
+      font-size: 16px;
+      background-color: #ececec;
+      padding: 10px 10px;
+      margin: 3px;
+      cursor: pointer;
+      &.active {
+        background-color: #00b1e4;
+        color: #fff;
+      }
+    }
+  }
+
+  .right-section {
+    text-align: left;
+    color: #7153f5;
+    padding-left: 30px;
+    .badge {
+      color: #666;
+      font-weight: 400;
+      font-size: 16px;
+      background-color: #ececec;
+      padding: 10px 10px;
+      margin: 3px;
+      cursor: pointer;
+      &.active {
+        background-color: #7153f5;
+        color: #fff;
+      }
+    }
+  }
+}
