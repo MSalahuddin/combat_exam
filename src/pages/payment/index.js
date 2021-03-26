@@ -27,7 +27,7 @@ import HblImg from "../../assets/hbl-logo.png";
 import StdtImg from "../../assets/std-bank-logo.png";
 import JsImg from "../../assets/js-bank-logo.png";
 import AlfalahImg from "../../assets/alfalah-logo.png";
-import easyPaisaImg from "../../assets/easy_paisa.jpeg"
+import easyPaisaImg from "../../assets/easy_paisa.jpeg";
 import { setCart } from "../../redux/auth/actions";
 import api from "../../services/api";
 
@@ -158,8 +158,10 @@ const MethodList = ({ amount, onChange }) => {
         onClick={() => onChange("wallet")}
       >
         Easy Paisa Wallet
-        <img src={easyPaisaImg} style={{ height: "30%", width: "30%", marginLeft: "40%" }} />
-
+        <img
+          src={easyPaisaImg}
+          style={{ height: "30%", width: "30%", marginLeft: "40%" }}
+        />
       </div>
       {bank && <Bank onChange={() => setBank(false)} job={{ price: amount }} />}
     </div>
@@ -362,16 +364,16 @@ const Verification = ({ amount, onChange }) => {
             code: "",
           }}
           validateOnMount={true}
-        // onSubmit={async (values, { setSubmitting }) => {
-        //   console.log(values);
-        //   await api.post("/auth/save_phone", { ...values, ...value });
-        //   // const { access_token, user } = await api.post("/auth/login", { email: "ali@gmail.com", password: "12345678" });
-        //   // api.setToken(access_token);
-        //   toastr.success("successfully saved!");
-        //   dispatch(setUser(values));
-        //   // history.push("/");
-        //   onChange(values);
-        // }}
+          // onSubmit={async (values, { setSubmitting }) => {
+          //   console.log(values);
+          //   await api.post("/auth/save_phone", { ...values, ...value });
+          //   // const { access_token, user } = await api.post("/auth/login", { email: "ali@gmail.com", password: "12345678" });
+          //   // api.setToken(access_token);
+          //   toastr.success("successfully saved!");
+          //   dispatch(setUser(values));
+          //   // history.push("/");
+          //   onChange(values);
+          // }}
         >
           {({
             handleChange,
@@ -616,6 +618,7 @@ const Bank = ({ onChange, job }) => {
                   onChange();
                 } catch (e) {
                   console.log(e);
+                  if (e.message) toastr.error(e.message);
                 }
                 setSubmitting(false);
               }}

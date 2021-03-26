@@ -1,26 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Col, Row } from "reactstrap";
+import { Col, Row, Container } from "reactstrap";
+import { toastr } from "react-redux-toastr";
+import api from "../../services/api";
+const imageURL = "http://panel.combatexam.com/public/book_images";
 
-import BookImg from "../../assets/reader.png";
+export default (props) => {
+  const [bookData, setBookData] = useState({});
+  const [bookImage, setBookImage] = useState({});
+  const [allBooks, setAllBooks] = useState([]);
 
-export default () => {
+  useEffect(async () => {
+    try {
+      const res = await api.get(
+        `${"/get_book"}/${props?.match?.params?.bookId}`
+      );
+      if (res.data) {
+        setBookData(res.data);
+        setBookImage(JSON.parse(res.data.book_images));
+      }
+    } catch (e) {
+      if (e.message) toastr.error(e.message);
+    }
+    try {
+      const res = await api.get("/get_books");
+      if (res.data) {
+        setAllBooks(res.data);
+      }
+    } catch (e) {
+      if (e.message) toastr.error(e.message);
+    }
+  }, [props?.match?.params?.bookId]);
+
+  if (!bookData || !allBooks.length) return <Container>Loading...</Container>;
+
   return (
     <div>
       <Row className="single-book">
         <Col md={5}>
           <div className="large-thumb">
-            <img src={BookImg} />
+            <img src={`${imageURL}/${bookImage.cover}`} />
           </div>
         </Col>
         <Col>
-          <h2>Books title</h2>
-          <p>
-            Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed
-            to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a
-            type specimen book.
-          </p>
-          <div className="price">Price:- 1200 PKR</div>
+          <h2>{bookData.title}</h2>
+          <p>{bookData.short_description}</p>
+          <div className="price">Price:- {bookData.price} PKR</div>
           <div className="buttons">
             <button className="button">Buy</button>
           </div>
@@ -29,7 +54,7 @@ export default () => {
       <div className="related-products">
         <h2>Related books</h2>
         <Row>
-          {data.map((e) => (
+          {allBooks.map((e) => (
             <Col md={3}>
               <Book value={e} />
             </Col>
@@ -41,39 +66,23 @@ export default () => {
 };
 
 const Book = ({ value }) => {
+  let image = JSON.parse(value.book_images);
+
   return (
     <div className="card-wrapper">
       <div className="thumb">
-        <Link to="/books/category/bookid">
-          <img src={BookImg} />
+        <Link to={{ pathname: `/books/${value.id}` }}>
+          <img src={`${imageURL}/${image.cover}`} />
         </Link>
       </div>
-      <h4>{value.name}</h4>
-      <p>{value.details}</p>
+      <h4>{value.title}</h4>
+      <p>{value.short_description}</p>
       <span className="price">{value.price}</span>
       <div className="buttons">
-        <Link to="/books/category/bookid" className="button">
+        <Link to={{ pathname: `/books/${value.id}` }} className="button">
           Read More
         </Link>
       </div>
     </div>
   );
 };
-
-const data = [
-  {
-    name: "Book Title",
-    details: "Book ID",
-    price: "Price:- 1200pkr",
-  },
-  {
-    name: "Book Title",
-    details: "Book ID",
-    price: "Price:- 1200pkr",
-  },
-  {
-    name: "Book Title",
-    details: "Book ID",
-    price: "Price:- 1200pkr",
-  },
-];

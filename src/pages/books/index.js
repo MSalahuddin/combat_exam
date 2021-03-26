@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Route, Switch } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-
-import Header from "../../components/header";
+import api from "../../services/api";
+import { toastr } from "react-redux-toastr";
 
 import List from "./list";
 import View from "./view";
 
 import "./index.scss";
 
-export default () => {
+export default (props) => {
+  const [bookCategories, setBookCategories] = useState([]);
+
+  useEffect(async () => {
+    try {
+      const res = await api.get("/get_book_categories");
+      if (res.data) {
+        setBookCategories(res.data);
+      }
+    } catch (e) {
+      if (e.message) toastr.error(e.message);
+    }
+  }, []);
+
   return (
     <div className="book-page">
       <Container style={{ padding: "30px 0" }}>
@@ -17,29 +30,28 @@ export default () => {
         <Row>
           <Col md={3}>
             <ul className="sidebar">
-              <li>
-                <NavLink exact to="/books/FPSC">
-                  FPSC
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/books/PPSC">PPSC</NavLink>
-              </li>
-              <li>
-                <NavLink to="/books/KPPSC">KPPSC</NavLink>
-              </li>
-              <li>
-                <NavLink to="/books/SPSC">SPSC</NavLink>
-              </li>
-              <li>
-                <NavLink to="/books/Miscellaneous">Miscellaneous</NavLink>
-              </li>
+              {bookCategories.map((val) => {
+                return (
+                  <li>
+                    <NavLink
+                      exact
+                      to={{
+                        pathname: "/books",
+                        state: {
+                          categoryId: val.id,
+                        },
+                      }}
+                    >
+                      {val.name}
+                    </NavLink>
+                  </li>
+                );
+              })}
             </ul>
           </Col>
           <Col>
             <Switch>
-              <Route path="/books/:category/:bookId" component={View} />
-              <Route path="/books/:category" component={List} />
+              <Route path="/books/:bookId" component={View} />
               <Route path="/books" component={List} />
             </Switch>
           </Col>
