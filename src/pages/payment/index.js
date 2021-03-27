@@ -92,7 +92,7 @@ export default () => {
   };
 
   const screens = {
-    list: <MethodList amount={total} onChange={handleChange} />,
+    list: <MethodList amount={total} onChange={handleChange} jobId={cart[0]?.job?.id} />,
     wallet: (
       <Wallet
         amount={total}
@@ -131,7 +131,7 @@ export default () => {
   );
 };
 
-const MethodList = ({ amount, onChange }) => {
+const MethodList = ({ amount, onChange, jobId }) => {
   const [bank, setBank] = useState(false);
   return (
     <div className="list">
@@ -163,7 +163,7 @@ const MethodList = ({ amount, onChange }) => {
           style={{ height: "30%", width: "30%", marginLeft: "40%" }}
         />
       </div>
-      {bank && <Bank onChange={() => setBank(false)} job={{ price: amount }} />}
+      {bank && <Bank onChange={() => setBank(false)} job={{ price: amount, jobId: jobId }} />}
     </div>
   );
 };
@@ -364,16 +364,16 @@ const Verification = ({ amount, onChange }) => {
             code: "",
           }}
           validateOnMount={true}
-          // onSubmit={async (values, { setSubmitting }) => {
-          //   console.log(values);
-          //   await api.post("/auth/save_phone", { ...values, ...value });
-          //   // const { access_token, user } = await api.post("/auth/login", { email: "ali@gmail.com", password: "12345678" });
-          //   // api.setToken(access_token);
-          //   toastr.success("successfully saved!");
-          //   dispatch(setUser(values));
-          //   // history.push("/");
-          //   onChange(values);
-          // }}
+        // onSubmit={async (values, { setSubmitting }) => {
+        //   console.log(values);
+        //   await api.post("/auth/save_phone", { ...values, ...value });
+        //   // const { access_token, user } = await api.post("/auth/login", { email: "ali@gmail.com", password: "12345678" });
+        //   // api.setToken(access_token);
+        //   toastr.success("successfully saved!");
+        //   dispatch(setUser(values));
+        //   // history.push("/");
+        //   onChange(values);
+        // }}
         >
           {({
             handleChange,
@@ -610,14 +610,16 @@ const Bank = ({ onChange, job }) => {
               }}
               onSubmit={async (values, { setSubmitting }) => {
                 try {
-                  values.job_id = job.id;
+
+                  values.job_id = job.jobId//job.id;
                   values.user_id = user.id;
-                  await api.post("/auth/purchase_specific_job", values);
+                  let result = await api.post("/auth/purchase_specific_job", values);
+                  console.log("🚀 ~ file: index.js ~ line 617 ~ onSubmit={ ~ result", result)
                   toastr.success("TID successfully submitted");
                   history.push("/dashboard/purchased_jobs");
                   onChange();
                 } catch (e) {
-                  console.log(e);
+                  console.log("🚀 ~ file: index.js ~ line 621 ~ onSubmit={ ~ e", e)
                   if (e.message) toastr.error(e.message);
                 }
                 setSubmitting(false);
