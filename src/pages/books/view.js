@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "reactstrap";
 import { toastr } from "react-redux-toastr";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/scss/image-gallery.scss";
 import api from "../../services/api";
 const imageURL = "http://panel.combatexam.com/public/book_images";
 
 export default (props) => {
   const [bookData, setBookData] = useState({});
-  const [bookImage, setBookImage] = useState({});
+  const [bookImage, setBookImage] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
 
   useEffect(async () => {
@@ -16,8 +18,20 @@ export default (props) => {
         `${"/get_book"}/${props?.match?.params?.bookId}`
       );
       if (res.data) {
+        let img = JSON.parse(res.data.book_images);
+        const imagesArr = Object.entries(img);
+
+        const stateArr = [];
+        imagesArr.forEach(([key, value]) => {
+          // var someStr = key.replace(/['"]+/g, "");
+          let item = {
+            original: `${imageURL}/${value}`,
+            thumbnail: `${imageURL}/${value}`,
+          };
+          stateArr.push(item);
+        });
         setBookData(res.data);
-        setBookImage(JSON.parse(res.data.book_images));
+        setBookImage(stateArr);
       }
     } catch (e) {
       if (e.message) toastr.error(e.message);
@@ -39,7 +53,14 @@ export default (props) => {
       <Row className="single-book">
         <Col md={5}>
           <div className="large-thumb">
-            <img src={`${imageURL}/${bookImage.cover}`} />
+            {/* <img src={`${imageURL}/${bookImage.cover}`} /> */}
+            <ImageGallery
+              items={bookImage}
+              showFullscreenButton={false}
+              showPlayButton={false}
+              showBullets
+              autoPlay
+            />
           </div>
         </Col>
         <Col>
