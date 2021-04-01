@@ -135,3 +135,68 @@
     }
   }
 }
+
+.form-order {
+  h2 {
+    font-weight: 700;
+    font-size: 22px;
+    margin: 20px;
+    color: #333;
+    text-align: center;
+  }
+  .large-thumb {
+    background-color: #2bb24a;
+    margin-bottom: 10px;
+    padding-top: 15px;
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    p {
+      color: #fff;
+      background-size: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0px;
+    }
+  }
+  .button {
+    border: 0;
+    outline: none;
+    background-color: #2bb24a;
+    color: #fff;
+    padding: 5px;
+    font-size: 18px;
+    width: 200px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0;
+  }
+  .tableContainer {
+    background-color: white;
+    table {
+      margin: 20px 0;
+    }
+    th {
+      padding: 10px;
+      color: grey;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    td {
+      padding: 10px;
+      color: grey;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    td span {
+      margin-right: 15px;
+    }
+  }
+  .button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+  }
+}

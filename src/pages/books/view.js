@@ -68,7 +68,9 @@ export default (props) => {
           <p>{bookData.short_description}</p>
           <div className="price">Price:- {bookData.price} PKR</div>
           <div className="buttons">
-            <button className="button">Buy</button>
+            <Link className="button" to={`/order/form`}>
+              Buy
+            </Link>
           </div>
         </Col>
       </Row>

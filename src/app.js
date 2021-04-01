@@ -10,6 +10,7 @@ import Home from "./pages/home";
 import Exams from "./pages/exams";
 import Dashboard from "./pages/dashboard";
 import Books from "./pages/books";
+import OrderForm from "./pages/books/orderForm";
 import Packages from "./pages/packages";
 import Contact from "./pages/contact";
 import Payment from "./pages/payment";
@@ -51,6 +52,7 @@ export default () => {
         <div className="app">
           <Header fixed={false} />
           <Route path="/books" component={Books} />
+          <Route path="/order/form" component={OrderForm} />
           <Route path="/payment" component={Payment} />
           <Route path="/exams/:course_id" component={Exams} />
           <Route path="/exams" component={Exams} />
