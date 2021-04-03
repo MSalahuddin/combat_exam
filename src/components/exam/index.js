@@ -25,6 +25,7 @@ export default ({ value, onChange }) => {
   }, []);
 
   async function handleChange(data) {
+    console.log(data);
     await api.post("/auth/save_result", data);
     // onChange();
   }

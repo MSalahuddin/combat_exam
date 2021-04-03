@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, TabContent, Table, TabPane } from "reactstrap";
 import { Line, Bar } from "@reactchartjs/react-chart.js";
+import { useSelector } from "react-redux";
 
 import AnalyticsMeter from "../../../../components/analyticsMeter";
 
@@ -8,23 +9,21 @@ import "./index.scss";
 
 import api from "../../../../services/api";
 
-export default function Index() {
+export default function Index({ match }) {
   const [active, setActive] = useState("1");
   const [data, setData] = useState(null);
+  const user = useSelector((state) => state.Auth.user);
 
   useEffect(() => {
     (async () => {
-      const { result } = await api.post("/auth/get_job_result", { job_id: 1, user_id: 1 });
-      setData(result[result.length - 1]);
+      const { data: d } = await api.get(`/auth/get_analytics/${match.params.jobId}/${user.id}`);
+      setData(d);
     })();
-  }, []);
+  }, [match]);
 
   if (!data) return <div>Loading....</div>;
 
-  const { time, accuracy, obtained_marks, total_marks, result_detail } = data;
-
-  const incorrect = result_detail.filter((e) => e.correct_answer !== e.user_answer).length;
-  const correct = result_detail.filter((e) => e.correct_answer === e.user_answer).length;
+  const { time, question = {}, percentile = 0, marks = {}, main_stat = {}, accuracy = 0, rank = 0 } = data;
 
   return (
     <div>
@@ -34,32 +33,36 @@ export default function Index() {
       <div className="analytics">
         <Row>
           <Col md={3} sm={6} style={{ margin: "15px 0 30px", borderRight: "2px solid #eee" }}>
-            <AnalyticsMeter title="Score" value={`${correct} / ${result_detail.length}`} meterValue={correct / result_detail.length} />
+            <AnalyticsMeter title="Score" value={main_stat.score} meterValue={main_stat.score} />
+            {/* <AnalyticsMeter title="Score" value={`${correct} / ${result_detail.length}`} meterValue={correct / result_detail.length} /> */}
           </Col>
           <Col md={3} sm={6} style={{ margin: "15px 0 30px", borderRight: "2px solid #eee" }}>
-            <AnalyticsMeter title="Rank" value={`${(45 / 100) * 100} / 100`} meterValue={45 / 100} />
+            <AnalyticsMeter title="Rank" value={main_stat.rank} meterValue={main_stat.rank} />
+            {/* <AnalyticsMeter title="Rank" value={`${(45 / 100) * 100} / 100`} meterValue={45 / 100} /> */}
           </Col>
           <Col md={3} sm={6} style={{ margin: "15px 0 30px", borderRight: "2px solid #eee" }}>
-            <AnalyticsMeter title="Percentile" value={`${45}th`} meterValue={45 / 100} />
+            <AnalyticsMeter title="Percentile" value={`${main_stat.percentile || 0}th`} meterValue={main_stat.percentile} />
+            {/* <AnalyticsMeter title="Percentile" value={`${45}th`} meterValue={45 / 100} /> */}
           </Col>
           <Col md={3} sm={6} style={{ margin: "15px 0 30px" }}>
-            <AnalyticsMeter title="Accuracy" value={`${(accuracy / 100) * 100}%`} meterValue={accuracy / 100} />
+            <AnalyticsMeter title="Accuracy" value={`${main_stat.accuracy || 0}%`} meterValue={main_stat.accuracy} />
+            {/* <AnalyticsMeter title="Accuracy" value={`${(accuracy / 100) * 100}%`} meterValue={accuracy / 100} /> */}
           </Col>
         </Row>
         <br />
         <div className="tabs">
           <div className={(active === "1" && "active tab") || "tab"} onClick={() => setActive("1")}>
             Overview
-          </div>
+        </div>
           <div className={(active === "2" && "active tab") || "tab"} onClick={() => setActive("2")}>
             Strenths & Weaknesses
-          </div>
+        </div>
           <div className={(active === "3" && "active tab") || "tab"} onClick={() => setActive("3")}>
             Comparison
-          </div>
+        </div>
           <div className={(active === "4" && "active tab") || "tab"} onClick={() => setActive("4")}>
             Percentile vs Score
-          </div>
+        </div>
         </div>
         <TabContent activeTab={active}>
           <TabPane tabId="1">
@@ -85,13 +88,17 @@ export default function Index() {
                   </td>
                   <td style={{ padding: 0 }}>
                     <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>
-                      <span>{`${time.split(":")[0]} mins ${time.split(":")[1]} secs`}</span>
+                      {time ? <span>{`${time.yours.split(":")[0] || 0} mins ${time.yours.split(":")[1] || 0} secs`}</span> : <span>0</span>}
                     </div>
                     <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>
-                      <span>--</span>
+                      {time ? (
+                        <span>{`${String(time.avg_time).split(".")[0] || 0} mins ${String(time.avg_time).split(".")[1] || 0} secs`}</span>
+                      ) : (
+                          <span>0</span>
+                        )}
                     </div>
                     <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>
-                      <span>--</span>
+                      {time ? <span>{`${time.top_time.split(":")[0] || 0} mins ${time.top_time.split(":")[1] || 0} secs`}</span> : <span>0</span>}
                     </div>
                   </td>
                 </tr>
@@ -105,9 +112,9 @@ export default function Index() {
                     <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>topper's</div>
                   </td>
                   <td style={{ padding: 0 }}>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{accuracy} %</div>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>-- %</div>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>-- %</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{accuracy.yours || 0} %</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{accuracy.avg_accuracy || 0} %</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{accuracy.top_accuracy || 0} %</div>
                   </td>
                 </tr>
                 <tr>
@@ -121,10 +128,10 @@ export default function Index() {
                     <div style={{ padding: 10 }}>questions</div>
                   </td>
                   <td style={{ padding: 0 }}>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{incorrect}</div>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{result_detail.length}</div>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{correct}</div>
-                    <div style={{ padding: 10 }}>{total_marks}</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{question.incorrect}</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{question.attempted}</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{question.correct}</div>
+                    <div style={{ padding: 10 }}>{question.questions}</div>
                   </td>
                 </tr>
                 <tr>
@@ -138,12 +145,10 @@ export default function Index() {
                     <div style={{ padding: 10 }}>marks</div>
                   </td>
                   <td style={{ padding: 0 }}>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>-</div>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>--</div>
-                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>--</div>
-                    <div style={{ padding: 10 }}>
-                      {obtained_marks}/{total_marks}
-                    </div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{marks.highest}</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{marks.avg_marks}</div>
+                    <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>{marks.topper}</div>
+                    <div style={{ padding: 10 }}>{marks.marks}</div>
                   </td>
                 </tr>
                 <tr>
@@ -152,7 +157,7 @@ export default function Index() {
                   </td>
                   <td></td>
                   <td style={{ fontWeight: 600 }}>
-                    <span>-- %</span>
+                    <span>{percentile}th</span>
                   </td>
                 </tr>
                 <tr>
@@ -161,7 +166,7 @@ export default function Index() {
                   </td>
                   <td></td>
                   <td style={{ fontWeight: 600 }}>
-                    <span>--</span>
+                    <span>{rank}</span>
                   </td>
                 </tr>
               </tbody>
@@ -171,13 +176,31 @@ export default function Index() {
             <div className="graph-title">Strenths & Weaknesses</div>
             <StrenthsWeaknesses />
           </TabPane>
+
           <TabPane tabId="3">
             <div className="graph-title">Marks</div>
-            <GroupedBar />
+            <Row>
+              <Col style={{ marginBottom: 40 }}>
+                <GroupedBar />
+              </Col>
+              <Col style={{ marginBottom: 40 }}>
+                <GroupedBar />
+              </Col>
+            </Row>
+            <div className="graph-title">Questions</div>
+            <QuestionsBar value={question} />
+            <Row>
+              <Col style={{ marginBottom: 40 }}>
+                <GroupedBar />
+              </Col>
+              <Col style={{ marginBottom: 40 }}>
+                <GroupedBar />
+              </Col>
+            </Row>
           </TabPane>
           <TabPane tabId="4">
             <div className="graph-title">Percentile vs Score</div>
-            <LineChart />
+            <LineChart value={main_stat} />
           </TabPane>
         </TabContent>
       </div>
@@ -273,6 +296,63 @@ const GroupedBar = () => (
         ],
       }}
       options={{
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      }}
+    />
+  </div>
+);
+const QuestionsBar = ({ value }) => (
+  <div style={{ height: 250, maxWidth: "800px" }}>
+    <Bar
+      data={{
+        labels: ["Overall"],
+        datasets: [
+          // {
+          //   label: "Attempted",
+          //   data: [12],
+          //   backgroundColor: "rgb(255, 99, 132)",
+          //   barThickness: 20,
+          // },
+          {
+            label: "Correct",
+            data: [value.correct],
+            backgroundColor: "rgb(45, 196, 140)",
+            barThickness: 12,
+          },
+          {
+            label: "Incorrect",
+            data: [value.incorrect],
+            backgroundColor: "rgb(255 26 26)",
+            barThickness: 12,
+          },
+          {
+            label: "Unanswered",
+            data: [value.questions - value.attempted],
+            backgroundColor: "rgb(210 210 210)",
+            barThickness: 12,
+          },
+        ],
+      }}
+      options={{
+        maintainAspectRatio: false,
+        responsive: true,
+        tooltips: {
+          mode: "x-axis",
+        },
+        legend: {
+          align: "start",
+          labels: {
+            boxWidth: 12,
+          },
+        },
         scales: {
           yAxes: [
             {

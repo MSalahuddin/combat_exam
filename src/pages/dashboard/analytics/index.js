@@ -103,8 +103,8 @@ export default function Index() {
                     {time ? (
                       <span>{`${String(time.avg_time).split(".")[0] || 0} mins ${String(time.avg_time).split(".")[1] || 0} secs`}</span>
                     ) : (
-                      <span>0</span>
-                    )}
+                        <span>0</span>
+                      )}
                   </div>
                   <div style={{ borderBottom: "1px solid #eee", padding: 10 }}>
                     {time ? <span>{`${time.top_time.split(":")[0] || 0} mins ${time.top_time.split(":")[1] || 0} secs`}</span> : <span>0</span>}
