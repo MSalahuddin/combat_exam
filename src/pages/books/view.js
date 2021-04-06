@@ -68,7 +68,14 @@ export default (props) => {
           <p>{bookData.short_description}</p>
           <div className="price">Price:- {bookData.price} PKR</div>
           <div className="buttons">
-            <Link className="button" to={`/order/form`}>
+            <Link
+              className="button"
+              to={`/order/form`}
+              to={{
+                pathname: "/order/form",
+                state: { bookData },
+              }}
+            >
               Buy
             </Link>
           </div>
