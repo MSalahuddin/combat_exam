@@ -45,7 +45,7 @@ export default () => {
     try {
       // ${total}
       const res = await api.get(
-        `/auth/get_easy_paisa?url=${window.location.origin}/easypay/order_confirm&amount=6.01`
+        `/auth/get_easy_paisa?url=${window.location.origin}/easypay/order_confirm&amount=${total}.01`
       );
       console.log("🚀 ~  res", res);
       if (res.data) {
@@ -300,7 +300,6 @@ const PayNow = ({ amount, onChange }) => {
           }}
           validateOnMount={true}
           onSubmit={async (values, { setSubmitting }) => {
-            console.log(values, "SSSSSSSSSSSSSSSSSSS");
             // await api.post("/auth/save_phone", { ...values, ...value });
             // // const { access_token, user } = await api.post("/auth/login", { email: "ali@gmail.com", password: "12345678" });
             // // api.setToken(access_token);
