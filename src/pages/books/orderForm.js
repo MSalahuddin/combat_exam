@@ -2,15 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Col, FormGroup, Label, Row, Spinner, Container } from "reactstrap";
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import api from "../../services/api";
-import { useSelector } from "react-redux";
 import { Field, Formik } from "formik";
 import { toastr } from "react-redux-toastr";
+import { useDispatch, useSelector } from "react-redux";
+import { setBooksCart } from "../../redux/books/actions";
 
 export default (props) => {
+  const [loading, setLoading] = useState(true);
+  const [checkOutData, setCheckOutData] = useState("");
   const user = useSelector((state) => state.Auth.user);
-  console.log("🚀 ~ file: orderForm.js ~ line 11 ~ user", user);
   const bookData = props.location?.state?.bookData;
-  console.log("🚀 ~ file: orderForm.js ~ line 12 ~ bookData", bookData);
+  useSelector((state) => console.log(state, '//////////////////'));
+  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    setLoading(true);
+    try {
+      // ${total}
+      const res = await api.get(
+        `/auth/get_easy_paisa?url=${window.location.origin}/easypay/order_confirm&amount=${bookData.price}.01`
+      );
+      if (res.data) {
+        setLoading(false);
+        setCheckOutData(res.data);
+        dispatch(setBooksCart([bookData]));
+      }
+    } catch (e) {
+      setLoading(false);
+      if (e.message) toastr.error(e.message);
+    }
+  }, []);
 
   return (
     <div className="form-order">
@@ -26,24 +47,25 @@ export default (props) => {
                 address: user.institute_address,
               }}
               onSubmit={async (values, { setSubmitting }) => {
-                let payload = {
-                  name: values.name,
-                  email: values.email,
-                  mobile: values.phone,
-                  delivery_address: values.address,
-                  order_items: {
-                    bookID: [bookData.id],
-                    qty: ["1"],
-                    prices: [bookData.price],
-                  },
-                };
-                try {
-                  const res = await api.post("/books_order", payload);
-                  if (res.status !== 200) throw res;
-                  toastr.success("successfully Logged in");
-                } catch (e) {
-                  if (e.message) toastr.error(e.message);
-                }
+                console.log("kjakjdksajdksajk")
+                // let payload = {
+                //   name: values.name,
+                //   email: values.email,
+                //   mobile: values.phone,
+                //   delivery_address: values.address,
+                //   order_items: {
+                //     bookID: [bookData.id],
+                //     qty: ["1"],
+                //     prices: [bookData.price],
+                //   },
+                // };
+                // try {
+                //   const res = await api.post("/books_order", payload);
+                //   if (res.status !== 200) throw res;
+                //   toastr.success("successfully Logged in");
+                // } catch (e) {
+                //   if (e.message) toastr.error(e.message);
+                // }
               }}
             >
               {({
@@ -131,9 +153,52 @@ export default (props) => {
                       </table>
                     </div>
                   </div>
-                  <div className="button-div bg-white">
-                    <button className="button">Pay Now</button>
+                  <div>
+                    <form
+                      action="https://easypay.easypaisa.com.pk/easypay/Index.jsf"
+                      method="POST"
+                    >
+                      <input hidden value={checkOutData.amount} type="text" name="amount" />
+                      <input hidden value={checkOutData.storeId} type="text" name="storeId" />
+                      <input
+                        hidden
+                        value={checkOutData.postBackURL}
+                        type="text"
+                        name="postBackURL"
+                      />
+                      <input
+                        hidden
+                        value={checkOutData.orderRefNum}
+                        type="text"
+                        name="orderRefNum"
+                      />
+                      <input hidden value={checkOutData.expiryDate} type="text" name="expiryDate" />
+                      <input
+                        hidden
+                        value={checkOutData.autoRedirect}
+                        type="text"
+                        name="autoRedirect"
+                      />
+                      <input
+                        hidden
+                        value={checkOutData.merchantHashedReq}
+                        type="text"
+                        name="merchantHashedReq"
+                      />
+                      <input hidden value={""} type="text" name="paymentMethod" />
+                      {/* <button className="button" type="submit">
+                        {loading ? (
+                          <Spinner size="sm" />
+                        ) : (
+                          <span>Checkout Rs. {amount}</span>
+                        )}
+                      </button> */}
+                      <button className="button">Pay Now {bookData.price}</button>
+                    </form>
                   </div>
+                  {/* <div className="button-div bg-white">
+                   
+                  </div> */}
                 </form>
               )}
             </Formik>

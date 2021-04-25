@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { Spinner } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "./redux/auth/actions";
 
@@ -18,7 +19,12 @@ import Contests from "./pages/contests";
 import Room from "./pages/room";
 import OrderConfirm from "./pages/order_confirm";
 import OrderComplete from "./pages/order_complete";
-
+import InstituteSign from "./components/auth/Institute/signUp";
+import UserSign from './components/auth/signup/index'
+import Emslogin from "./components/emsauth/login";
+import InstituteLogin from './components/auth/login/index';
+import Forgot from './components/auth/forgot/index';
+// import Order from './pages/books/orderForm'
 import api from "./services/api";
 
 export default () => {
@@ -43,7 +49,20 @@ export default () => {
     //   // }, 2000);
   }, []);
   //
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "160px"
+
+      }}
+    >
+      <Spinner style={{ width: "4rem", height: "4rem" }} color="dark" />
+    </div>
+  );
 
   return (
     <Router>
@@ -61,6 +80,10 @@ export default () => {
           <Route path="/contact" component={Contact} />
           <Route exact path="/packages" component={Packages} />
           <Route exact path="/easypay/order_confirm" component={OrderConfirm} />
+          <Route path="/User-SignUP" component={UserSign} />
+          {/* <Route path="/student-login" component={Emslogin} /> */}
+          <Route path="/student-login" component={InstituteLogin} />
+          <Route path="/forgot" component={Forgot} />
           <Route exact path="/easypay/order_complete" component={OrderComplete} />
           <Route exact path="/" component={Home} />
           <Footer />

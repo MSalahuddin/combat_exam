@@ -18,7 +18,7 @@ export default ({ onChange, setScreen }) => {
   return (
     <div className="forgot">
       <h2 className="title">Forgot Password?</h2>
-      <div className="close-btn" onClick={onChange} />
+      {/* <div className="close-btn" onClick={onChange} /> */}
       <Formik
         initialValues={{
           email: "",
@@ -39,7 +39,7 @@ export default ({ onChange, setScreen }) => {
         }}
       >
         {({ handleChange, handleSubmit, isSubmitting, errors, values }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} style={{ width: "40%" }}>
             <FormGroup>
               <Label>Registered Email Address</Label>
               <Field className="form-control" type="email" name="email" value={values.email} onChange={handleChange} />
@@ -48,12 +48,12 @@ export default ({ onChange, setScreen }) => {
           </form>
         )}
       </Formik>
-      <div className="actions">
-        <div className="action-line">
-          Don't have account ? <span onClick={() => setScreen("signup")}>Signup</span>
+      <div className="d-flex justify-content-between">
+        <div className="action-line" style={{ marginRight: "20px" }}>
+          Don't have account ? <span >Signup</span>
         </div>
-        <div className="action-line" style={{ paddingTop: 0 }}>
-          Remember password ? <span onClick={() => setScreen("login")}>Login</span>
+        <div className="action-line" >
+          Remember password ? <span >Login</span>
         </div>
       </div>
     </div>

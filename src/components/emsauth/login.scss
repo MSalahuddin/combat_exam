@@ -1,0 +1,147 @@
+.how {
+    padding: 0;
+    margin:0;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    background-color: #FFFFFF;
+  }
+
+  .left{
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: black;
+  }
+
+  .right{
+
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex:0.5;
+    display: flex;
+    width: 100%;
+    background-color:#2d8504;
+    justify-content: space-between;
+    
+    align-items: center;
+  
+  }
+
+  .upper_part{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .top_heading {
+    font-weight: 100;
+    word-spacing: 10px;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: center;
+   
+    text-align: center;    
+  }
+
+  .arabic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+
+  .lower_part{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .small {
+    margin-top: -10px;
+  }
+
+  .form_div{
+    width: 45%;
+    
+  }
+
+
+.password-forget {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 5px;
+    
+  }
+
+  .button {
+    outline: 0;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 300;
+    background-color: #4eb51a;
+    color: #fff;
+    width: 45%;
+  }
+
+  .signin_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+  }
+
+.email_field {
+  outline: none;
+  border-radius: 12px;
+  width:100%;
+  padding: 10px 20px;
+  border: 1px solid black;
+  
+  
+}
+
+::placeholder {
+  color: black;
+  opacity: 1;
+}
+
+.password_field{
+  outline: none;
+  border-radius: 12px;
+  width:100%;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: 1px solid black;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .right{
+
+    display: none;
+  }
+  .left{
+    flex:1;
+
+  }
+}
+
+@media only screen and (max-width: 992px) {
+
+  .form_div{
+    width: 55%;
+  }
+}

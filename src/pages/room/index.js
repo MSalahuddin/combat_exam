@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "reactstrap";
+import { Button, Spinner } from "reactstrap";
 
 import CourseDetails from "./CourseDetails";
 import EnrollModal from "./EnrollMe";
@@ -63,7 +63,8 @@ const Main = () => {
   if (lectureSchedules.loading) {
     return (
       <div className="py-5 text-center">
-        <p>Loading...</p>
+        <Spinner style={{ width: "4rem", height: "4rem" }} color="dark" />
+        {/* <p>Loading...</p> */}
       </div>
     );
   }

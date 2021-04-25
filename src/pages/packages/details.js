@@ -50,7 +50,11 @@ export default ({ match }) => {
   // console.log("RENDER");
 
   if (!commission)
-    return <Container style={{ padding: "20px 0" }}>Loading...</Container>;
+    return (
+      <Container style={{ padding: "20px 0" }}>
+        <Spinner style={{ width: "4rem", height: "4rem" }} color="dark" />
+      </Container>
+    );
 
   return (
     <Container style={{ padding: "20px 0" }}>
@@ -64,7 +68,11 @@ export default ({ match }) => {
           </div>
         ))}
       </div>
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <div>
+          <Spinner style={{ width: "4rem", height: "4rem" }} color="dark" />
+        </div>
+      )}
       <div className="tab-section">
         {/* <div className="details">
           <h2>{job.title}</h2>
@@ -199,7 +207,7 @@ const Card = ({ value }) => {
           <button
             disabled={loading}
             onClick={() => addToCart("buy")}
-            // onClick={buy}
+          // onClick={buy}
           >
             {loading ? <Spinner size="sm" /> : "Buy"}
           </button>
@@ -237,11 +245,16 @@ const Deatils = ({ job, children }) => {
 
 const LoginComponent = ({ onChange }) => {
   return (
-    <Modal isOpen={true} toggle={onChange}>
-      <ModalBody style={{ padding: 0 }}>
+    <Modal isOpen={true} toggle={onChange} style={{ width: "70%" }}>
+      <ModalBody >
         <Auth type="login" onChange={onChange} />
       </ModalBody>
     </Modal>
+    // <Modal isOpen={true} toggle={onChange}>
+    //   <ModalBody style={{ padding: 0 }}>
+    //     <Auth type="login" onChange={onChange} />
+    //   </ModalBody>
+    // </Modal>
   );
 };
 

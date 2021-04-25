@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Modal, ModalBody } from "reactstrap";
+import {
+  Modal, ModalBody, ButtonDropdown,
+  DropdownToggle,
+} from "reactstrap";
 import { useSelector } from "react-redux";
 import classnames from "classnames";
 
@@ -42,9 +45,9 @@ export default ({ fixed = true }) => {
           <li>
             <Link to="/room">Lectures Room</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/contests">Contests</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/contact">Contact us</Link>
           </li>
@@ -79,16 +82,21 @@ const SignupComponent = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <React.Fragment>
-      <li className="signup-button" onClick={() => setOpen(true)}>
-        Sign up
-      </li>
-      <Modal isOpen={open} toggle={() => setOpen(false)}>
-        <ModalBody style={{ padding: 0 }}>
-          <Auth type="signup" onChange={() => setOpen(false)} />
-        </ModalBody>
-      </Modal>
-    </React.Fragment>
+    // <React.Fragment>
+    //   <li className="signup-button" onClick={() => setOpen(true)}>
+    //     Sign up
+    //   </li>
+    //   <Modal isOpen={open} toggle={() => setOpen(false)}>
+    //     <ModalBody style={{ padding: 0 }}>
+    //       <Auth type="signup" onChange={() => setOpen(false)} />
+    //     </ModalBody>
+    //   </Modal>
+    // </React.Fragment>
+    <ButtonDropdown >
+      <Link to="/User-SignUP">
+        <DropdownToggle>Sign Up</DropdownToggle>
+      </Link>
+    </ButtonDropdown>
   );
 };
 
@@ -96,13 +104,18 @@ const LoginComponent = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <React.Fragment>
-      <li onClick={() => setOpen(true)}>Login</li>
-      <Modal isOpen={open} toggle={() => setOpen(false)}>
-        <ModalBody style={{ padding: 0 }}>
-          <Auth type="login" onChange={() => setOpen(false)} />
-        </ModalBody>
-      </Modal>
-    </React.Fragment>
+    // <React.Fragment>
+    //   <li onClick={() => setOpen(true)}>Login</li>
+    //   <Modal isOpen={open} toggle={() => setOpen(false)}>
+    //     <ModalBody style={{ padding: 0 }}>
+    //       <Auth type="login" onChange={() => setOpen(false)} />
+    //     </ModalBody>
+    //   </Modal>
+    // </React.Fragment>
+    <ButtonDropdown style={{ marginRight: "8px" }}>
+      <Link to="/student-login">
+        <DropdownToggle >Login</DropdownToggle>
+      </Link>
+    </ButtonDropdown>
   );
 };

@@ -1,18 +1,22 @@
 .forgot {
-  border-radius: 12px;
-  background-color: #fff;
-  padding: 40px 30px;
-  position: relative;
-  .close-btn {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    height: 16px;
-    width: 16px;
-    background: url("../../../assets/close.svg") center no-repeat;
-    background-size: contain;
-    cursor: pointer;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  // border-radius: 12px;
+  // background-color: #fff;
+  // padding: 40px 30px;
+  // position: relative;
+  // .close-btn {
+  //   position: absolute;
+  //   right: 20px;
+  //   top: 20px;
+  //   height: 16px;
+  //   width: 16px;
+  //   background: url("../../../assets/close.svg") center no-repeat;
+  //   background-size: contain;
+  //   cursor: pointer;
+  // }
   .button {
     outline: 0;
     border: 0;
@@ -28,16 +32,19 @@
   }
   .title {
     font-size: 22px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    // font-size: 22px;
+    // margin-bottom: 30px;
   }
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0 0;
-  }
+  // .actions {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   padding: 20px 0 0;
+  // }
   .action-line {
-    text-align: center;
+    // text-align: center;
     font-size: 14px;
     span {
       color: #4eb51a;

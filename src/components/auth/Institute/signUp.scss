@@ -1,0 +1,29 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .signUP{
+    background-color:#338600;
+    border: none;
+    border-radius: 60px;
+    color: white;
+    font-size: 23px;
+    width: 450px;
+    height: 45px;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+  .signUP:hover{
+    opacity: 1;
+  }
+  .link{
+    color: #338600;
+  }
+  .endpoint{
+    padding: 5px;
+    text-align: center;
+  }
+  .xyz{
+    margin-top: 12px;
+  }

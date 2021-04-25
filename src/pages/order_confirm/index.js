@@ -8,7 +8,8 @@ import "./index.scss";
 export default (props) => {
     let params = QueryString.parse(props.location.search);
     console.log("🚀 ~ file: index.js ~ line 10 ~ params", params)
-    const { cart } = useSelector((state) => state.Auth);
+    const { cart, } = useSelector((state) => state.Auth);
+    useSelector((state) => console.log(state, '//////////////////'));
     const total = cart.reduce((a, b) => parseInt(a) + parseInt(b.job.price), 0);
     return (
         <div className="order_confirm">
@@ -20,9 +21,11 @@ export default (props) => {
                         <img src={Tick} style={{ height: "6%", width: '9%' }} />
                         <p>Please confirm to pay the Amount {total ? total : 0} Rupee</p>
                         to Green Mark Trading (Combat Exam) to complete the order. <br /> Thankyou! <br />
-                        <button className="button" type="submit" style={{ width: '20%' }}>
-                            PLEASE CONFIRM
-                        </button>
+                        <div style={{ width: '100%', alignItems: "center", justifyContent: "center" }}>
+                            <button className="button" type="submit" style={{ width: '100%', }}>
+                                PLEASE CONFIRM
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
