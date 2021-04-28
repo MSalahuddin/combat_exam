@@ -6,35 +6,65 @@ import { Field, Formik } from "formik";
 import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
 import { setBooksCart } from "../../redux/books/actions";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+const renderModal = (showModal, toggle, onClosed, details) => {
+  return (
+    <Modal isOpen={showModal} toggle={toggle} onClosed={onClosed} size="xl">
+      <ModalHeader toggle={toggle}>Course Details</ModalHeader>
+      {details && <ModalBody>
+        <div className="d-md-flex">
+          <div className="d-flex align-items-center">
+            <span className="room__course-details-box mr-2"></span>
+            <p className="mb-0">{`Instructor: ${details.instructorName}`}</p>
+          </div>
+          <div className="d-flex ml-md-3 align-items-center">
+            <span className="room__course-details-box mr-2"></span>
+            <p className="mb-0">{`Start Date: ${details.startDate}`}</p>
+          </div>
+
+        </div>
+        <hr className="my-3 bg-success" />
+        {details.details}
+      </ModalBody>}
+      <ModalFooter>
+        <Button color="secondary" onClick={toggle}>Close</Button>
+      </ModalFooter>
+    </Modal>
+  )
+}
 export default (props) => {
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [checkOutData, setCheckOutData] = useState("");
   const user = useSelector((state) => state.Auth.user);
   const bookData = props.location?.state?.bookData;
-  useSelector((state) => console.log(state, '//////////////////'));
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    setLoading(true);
-    try {
-      // ${total}
-      const res = await api.get(
-        `/auth/get_easy_paisa?url=${window.location.origin}/easypay/order_confirm&amount=${bookData.price}.01`
-      );
-      if (res.data) {
-        setLoading(false);
-        setCheckOutData(res.data);
-        dispatch(setBooksCart([bookData]));
-      }
-    } catch (e) {
-      setLoading(false);
-      if (e.message) toastr.error(e.message);
-    }
-  }, []);
-
+  // useEffect(async () => {
+  //   setLoading(true);
+  //   try {
+  //     // ${total}
+  //     const res = await api.get(
+  //       `/auth/get_easy_paisa?url=${window.location.origin}/easypay/order_confirm&amount=${bookData.price}.01`
+  //     );
+  //     if (res.data) {
+  //       setLoading(false);
+  //       setCheckOutData(res.data);
+  //       dispatch(setBooksCart([bookData]));
+  //     }
+  //   } catch (e) {
+  //     setLoading(false);
+  //     if (e.message) toastr.error(e.message);
+  //   }
+  // }, []);
+  const toggle = () => setShowModal(!showModal);
+  const onClosedModal = () => {
+    setShowModal(false)
+  };
   return (
     <div className="form-order">
+      {renderModal(true, toggle, onClosedModal)}
       <Container>
         <h2>Books Order From</h2>
         <Row>
@@ -47,25 +77,24 @@ export default (props) => {
                 address: user.institute_address,
               }}
               onSubmit={async (values, { setSubmitting }) => {
-                console.log("kjakjdksajdksajk")
-                // let payload = {
-                //   name: values.name,
-                //   email: values.email,
-                //   mobile: values.phone,
-                //   delivery_address: values.address,
-                //   order_items: {
-                //     bookID: [bookData.id],
-                //     qty: ["1"],
-                //     prices: [bookData.price],
-                //   },
-                // };
-                // try {
-                //   const res = await api.post("/books_order", payload);
-                //   if (res.status !== 200) throw res;
-                //   toastr.success("successfully Logged in");
-                // } catch (e) {
-                //   if (e.message) toastr.error(e.message);
-                // }
+                let payload = {
+                  name: values.name,
+                  email: values.email,
+                  mobile: values.phone,
+                  delivery_address: values.address,
+                  order_items: {
+                    bookID: [bookData.id],
+                    qty: ["1"],
+                    prices: [bookData.price],
+                  },
+                };
+                try {
+                  const res = await api.post("/books_order", payload);
+                  if (res.status !== 200) throw res;
+                  toastr.success("successfully Logged in");
+                } catch (e) {
+                  if (e.message) toastr.error(e.message);
+                }
               }}
             >
               {({
@@ -153,7 +182,7 @@ export default (props) => {
                       </table>
                     </div>
                   </div>
-                  <div>
+                  {/* <div>
                     <form
                       action="https://easypay.easypaisa.com.pk/easypay/Index.jsf"
                       method="POST"
@@ -186,19 +215,19 @@ export default (props) => {
                         name="merchantHashedReq"
                       />
                       <input hidden value={""} type="text" name="paymentMethod" />
-                      {/* <button className="button" type="submit">
+                     <button className="button" type="submit">
                         {loading ? (
                           <Spinner size="sm" />
                         ) : (
                           <span>Checkout Rs. {amount}</span>
                         )}
-                      </button> */}
+                      </button> 
                       <button className="button">Pay Now {bookData.price}</button>
                     </form>
-                  </div>
-                  {/* <div className="button-div bg-white">
-                   
                   </div> */}
+                  <div className="button-div bg-white">
+                    <button className="button">Pay Now {bookData.price}</button>
+                  </div>
                 </form>
               )}
             </Formik>
