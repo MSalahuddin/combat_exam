@@ -1,41 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Col, FormGroup, Label, Row, Spinner, Container } from "reactstrap";
+import React, { useState } from "react";
+import { Col, FormGroup, Row, Container } from "reactstrap";
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import api from "../../services/api";
 import { Field, Formik } from "formik";
 import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
-import { setBooksCart } from "../../redux/books/actions";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Swal from "sweetalert2";
 
-const renderModal = (showModal, toggle, onClosed, details) => {
-  return (
-    <Modal isOpen={showModal} toggle={toggle} onClosed={onClosed} size="xl">
-      <ModalHeader toggle={toggle}>Course Details</ModalHeader>
-      {details && <ModalBody>
-        <div className="d-md-flex">
-          <div className="d-flex align-items-center">
-            <span className="room__course-details-box mr-2"></span>
-            <p className="mb-0">{`Instructor: ${details.instructorName}`}</p>
-          </div>
-          <div className="d-flex ml-md-3 align-items-center">
-            <span className="room__course-details-box mr-2"></span>
-            <p className="mb-0">{`Start Date: ${details.startDate}`}</p>
-          </div>
-
-        </div>
-        <hr className="my-3 bg-success" />
-        {details.details}
-      </ModalBody>}
-      <ModalFooter>
-        <Button color="secondary" onClick={toggle}>Close</Button>
-      </ModalFooter>
-    </Modal>
-  )
-}
 export default (props) => {
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
   const [checkOutData, setCheckOutData] = useState("");
   const user = useSelector((state) => state.Auth.user);
   const bookData = props.location?.state?.bookData;
@@ -58,13 +31,9 @@ export default (props) => {
   //     if (e.message) toastr.error(e.message);
   //   }
   // }, []);
-  const toggle = () => setShowModal(!showModal);
-  const onClosedModal = () => {
-    setShowModal(false)
-  };
+
   return (
     <div className="form-order">
-      {renderModal(true, toggle, onClosedModal)}
       <Container>
         <h2>Books Order From</h2>
         <Row>
@@ -91,7 +60,13 @@ export default (props) => {
                 try {
                   const res = await api.post("/books_order", payload);
                   if (res.status !== 200) throw res;
-                  toastr.success("successfully Logged in");
+                  Swal.fire({
+                    icon: "success",
+                    title: "Successfully Ordered",
+                    text:
+                      "You have place successfully the Order for the Books. Our Official Representative will call you for further information. Thank you!",
+                    confirmButtonColor: "#2bb24a",
+                  });
                 } catch (e) {
                   if (e.message) toastr.error(e.message);
                 }
